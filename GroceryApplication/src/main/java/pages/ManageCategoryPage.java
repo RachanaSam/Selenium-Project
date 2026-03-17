@@ -1,5 +1,6 @@
 package pages;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -11,9 +12,9 @@ import utilites.FileUploadUtilites;
 
 public class ManageCategoryPage {
 	public WebDriver driver;
-	@FindBy(xpath="//a[@href='https://groceryapp.uniqassosiates.com/admin/list-category' and  @class=\"small-box-footer\"]")
+	@FindBy(xpath="//a[@href='https://groceryapp.uniqassosiates.com/admin/list-category'and @class='small-box-footer']")
 	WebElement manageCategoryMoreInfo;
-	@FindBy(css="a[onclick='click_button(1)']")WebElement newButton;
+	@FindBy(xpath="//a[@href='https://groceryapp.uniqassosiates.com/admin/Category/add']")WebElement newButton;
 	@FindBy(xpath="//input[@id='category']")WebElement enterCatogary;
 	@FindBy(xpath="//input[@id='category']")WebElement imageUpload;
 	@FindBy(xpath="//button[text()=\"Save\"]")WebElement imageSave;
@@ -23,11 +24,14 @@ public class ManageCategoryPage {
 	}
 	public void clickManageCategoryMoreInfo()
 	{
+		JavascriptExecutor js =(JavascriptExecutor)driver;
+		js.executeScript("arguments[0].click();", manageCategoryMoreInfo);
 		manageCategoryMoreInfo.click();
 	}
 	public void clickManageNewButton()
 	{
-		newButton.click();
+		JavascriptExecutor  js = (JavascriptExecutor)driver;
+		js.executeScript("arguments[0].click();", newButton);
 	}
 	public void enterCatogary(String catogary)
 	{

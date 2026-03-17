@@ -1,30 +1,54 @@
 package testscript;
-	import org.openqa.selenium.WebDriver;
+	import java.io.IOException;
+
+import org.openqa.selenium.WebDriver;
 	import org.openqa.selenium.chrome.ChromeDriver;
-	import org.testng.annotations.BeforeMethod;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.ITestResult;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
+
+import utilites.ScreenShortUtility;
 
 	public class Base {
 		
 	public WebDriver driver;
 		
 		@BeforeMethod
-		
-		public void browserInitialization() {
+		@Parameters("browser")
+		public void browserInitialization(String browser) throws Exception {
+			if(browser.equalsIgnoreCase("chrome"))
+			{
 		
 			 driver = new ChromeDriver();
-			
-			driver.get("https://groceryapp.uniqassosiates.com/admin");
+			}
+			else if (browser.equalsIgnoreCase("firefox"))
+			{
+				driver = new FirefoxDriver();
+			}
+			else if (browser.equalsIgnoreCase("edge"))
+					{
+				driver = new EdgeDriver();
+					}
+			else 
+				throw new Exception("Invalid Browser");
+				driver.get("https://groceryapp.uniqassosiates.com/admin");
 			driver.manage().window().maximize();
 			
 			
 		}
 		
-		/*/@AfterMethod
-		
-		public void browserQuitAndClose() {
-			//driver.close(); // to close the browser current window
-					driver.quit();*/
+		@AfterMethod(alwaysRun = true)
+		public void browserQuitAndClose(ITestResult iTestResult) throws IOException {
+			if(iTestResult.getStatus()==iTestResult.FAILURE) {
+				ScreenShortUtility screenshot=new ScreenShortUtility();
+				screenshot.getScreenShot(driver, iTestResult.getName());
+			}
 			
+			driver.quit();
+		}
 	
 
 }

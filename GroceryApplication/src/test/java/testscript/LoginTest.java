@@ -10,11 +10,11 @@ public class LoginTest extends Base {
 	}
 	public void enterTheUserName(String user)
 	{
-		username.sendKeys(user);
+		user.sendKeys(user);
 	}
 	public void enterThePassword(String pass)
 	{
-		password.sendKeys(pass);
+		pass.sendKeys(pass);
 	}
 	public void clickOnLoginButton()
 	{
